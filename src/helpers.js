@@ -8,13 +8,13 @@ function createElement(tag, props, ...children) {
             element[key] = props[key];
         }
     });
-
     children.forEach(child => {
         if (typeof child === 'string') {
             child = document.createTextNode(child);
         }
 
         element.appendChild(child);
+
     });
 
     return element;
@@ -36,18 +36,41 @@ class EventEmitter {
         }
     }
 }
+function saveDeck(state) {
+    const currentState = load();
+    const newState = currentState.map(item => {
+        if (state.id === item.id) {
+            return {
+                id: item.id,
+                title: item.title,
+                lines: state.items,
+            }
+        }
+        return item;
+    })
+    const string = JSON.stringify(newState);
+    localStorage.setItem('todos', string);
+}
+
+function deleteDeck(id) {
+    const currentState = load();
+    const newState = currentState.filter(item => id !== item.id);
+    const string = JSON.stringify(newState);
+    localStorage.setItem('todos', string);
+}
 
 function save(data) {
     const string = JSON.stringify(data);
-
     localStorage.setItem('todos', string);
 }
 
 function load() {
     const string = localStorage.getItem('todos');
     const data = JSON.parse(string);
-
     return data;
 }
 
-export { createElement, EventEmitter, save, load };
+
+
+
+export { createElement, EventEmitter, save, load, saveDeck, deleteDeck };

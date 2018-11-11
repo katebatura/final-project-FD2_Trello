@@ -1,40 +1,29 @@
 import { EventEmitter } from './helpers';
+import { save, load } from './helpers';
 
 class Model extends EventEmitter {
-    constructor(items = []) {
+    constructor() {
         super();
-        
-        this.items = items;
+        this.decks = load() || [];
     }
 
-    getItem(id) {
-        return this.items.find(item => item.id == id);
+    addDeck() {
+        console.log(this.decks);
+        const lastDeck = this.decks[this.decks.length - 1];
+        const DeckNumber = lastDeck ? +lastDeck.id.slice(3) : 0;
+        console.log(DeckNumber);
+        const newDeck = {
+            id: `app${DeckNumber + 1}`,
+            title: `deck ${DeckNumber + 1}`,
+            lines:[],
+        };
+        this.decks.push(newDeck);
+        this.emit('change', newDeck);
+        save(this.decks);
     }
 
-    addItem(item) {
-        this.items.push(item);
-        this.emit('change', this.items);
-        return item;
-    }
 
-    updateItem(id, data) {
-        const item = this.getItem(id);
 
-        Object.keys(data).forEach(prop => item[prop] = data[prop]);
-
-        this.emit('change', this.items);
-        
-        return item;
-    }
-
-    removeItem(id) {
-        const index = this.items.findIndex(item => item.id == id);
-        
-        if (index > -1) {
-            this.items.splice(index, 1);
-            this.emit('change', this.items);
-        }
-    }
 }
 
 export default Model;

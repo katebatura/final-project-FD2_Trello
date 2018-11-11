@@ -1,42 +1,23 @@
+import DeckController from "./deck/controller";
+import Model from "./model";
+import View from "./view";
+
 class Controller {
-    constructor(model, view) {
-        this.model = model;
-        this.view = view;
-        
-        view.on('add', this.addTodo.bind(this));
-        view.on('toggle', this.toggleTodo.bind(this));
-        view.on('edit', this.editTodo.bind(this));
-        view.on('remove', this.removeTodo.bind(this));
-
-        view.show(model.items);
-    }
-
-    addTodo(title) {
-        const item = this.model.addItem({
-            id: Date.now(),
-            title,
-            completed: false
+    constructor() {
+        this.model = new Model();
+        this.view = new View();
+        this.button = document.getElementById('add');
+        this.button.addEventListener('click', this.addDeck.bind(this));
+        this.model.on('change', state => {
+            new DeckController(state);
         });
 
-        this.view.addItem(item);
+        this.model.decks.forEach(deck => new DeckController(deck));
     }
 
-    toggleTodo({ id, completed }) {
-        const item = this.model.updateItem(id, { completed });
-
-        this.view.toggleItem(item);
+    addDeck() {
+        this.model.addDeck();
     }
 
-    editTodo({ id, title }) {
-        const item = this.model.updateItem(id, { title });
-        
-        this.view.editItem(item);
-    }
-
-    removeTodo(id) {
-        this.model.removeItem(id);
-        this.view.removeItem(id);
-    }
 }
-
 export default Controller;
