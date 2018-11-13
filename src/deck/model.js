@@ -44,6 +44,21 @@ class DeckModel extends EventEmitter {
             this.emit('change', this.items);
         }
     }
+
+    changeList(items){
+        console.log(this.items);
+        
+        this.items = items;
+        console.log(this.items);
+        
+        this.emit('change', {
+            id: this.id,
+            title: this.title,
+            items: this.items,
+        });
+        
+        return items;
+    }
 }
 
 export default DeckModel;

@@ -3,12 +3,21 @@ import { EventEmitter, createElement } from '../helpers';
 class DeckView extends EventEmitter {
     constructor(deckParams) {
         super();
+
         this.main = this.createDeck(deckParams);
         this.form = this.main.getElementsByTagName('form')[0];
         this.input = this.main.getElementsByClassName('input')[0];
         this.list = this.main.getElementsByClassName('todo-list')[0];
-        this.form.addEventListener('submit', this.handleAdd.bind(this));
         this.delButton = this.main.getElementsByClassName('delButton')[0];
+
+        this.dragToDo = null;
+        this.graggableObject = null;
+        this.xy = {};
+
+        this.list.addEventListener('drop', this.listDrop.bind(this));
+        this.list.addEventListener('dragover', this.listDragOver.bind(this));
+
+        this.form.addEventListener('submit', this.handleAdd.bind(this));
         this.delButton.addEventListener('click', this.handleDeleteDeck.bind(this));
     }
 
@@ -32,7 +41,7 @@ class DeckView extends EventEmitter {
         const editInput = createElement('input', { type: 'text', className: 'textfield' });
         const editButton = createElement('button', { className: 'edit' });
         const deleteButton = createElement('button', { className: 'remove' });
-        const item = createElement('div', { className: `todo-item${todo.completed ? ' completed': ''}`, 'data-id': todo.id },
+        const item = createElement('div', { className: 'todo-item', 'data-id': todo.id, draggable: 'true'},
                              label, editInput, editButton, deleteButton);
 
         return this.addEventListeners(item);
@@ -41,6 +50,14 @@ class DeckView extends EventEmitter {
     addEventListeners(item) {
         const editButton = item.querySelector('button.edit');
         const removeButton = item.querySelector('button.remove');
+        
+        item.addEventListener('dragstart',this.handleDragStart.bind(this));
+        item.addEventListener('drag',this.handleDrag.bind(this));
+        item.addEventListener('dragend',this.handleDragEnd.bind(this));
+        
+        //item.addEventListener('mousemove', this.handleMouseMove.bind(this));
+        //item.addEventListener('mousedown', this.handleMouseDown.bind(this));
+        //item.addEventListener('mouseup', this.handleMouseUp.bind(this));
 
         editButton.addEventListener('click', this.handleEdit.bind(this));
         removeButton.addEventListener('click', this.handleRemove.bind(this));
@@ -125,6 +142,70 @@ class DeckView extends EventEmitter {
         const listItem = this.findListItem(id);
 
         this.list.removeChild(listItem);
+    }
+    
+    handleDragStart(e) {
+        this.dragToDo = e.currentTarget;
+        
+    }
+
+    handleDrag(e) { 
+        
+    }
+
+    handleDragEnd(e) {
+        this.dragToDo = null;
+    }
+
+    listDragOver(e) {
+        if (e.target.className == "todo-list") {
+            e.preventDefault();
+         }
+    }
+
+    listDrop(e) {
+        e.preventDefault;
+        if (this.dragToDo) {  
+            e.target.appendChild(this.dragToDo);
+            
+            var items = Array.from(this.list.getElementsByClassName('todo-item'));
+            var list = [];
+            console.log(items);
+            items.forEach(item => {
+                let id = item.getAttribute('data-id');
+                let title = item.textContent;
+            
+                list.push({id,title});
+            });
+
+            console.log(list);
+        }
+        this.emit('changeList', list);
+    }
+
+    handleMouseDown(e) {
+        console.log('hi');
+        this.graggableObject = e.target;   
+        this.graggableObject.style.cursor = 'pointer';
+        var s = this.graggableObject.getBoundingClientRect();
+        this.xy.top = s.top; 
+        this.xy.left = s.left; 
+        this.xy.mtop = e.clientY; 
+        this.xy.mleft = e.clientX;
+    }
+    handleMouseUp(e) {
+        this.graggableObject.style.cursor = 'default';
+        this.graggableObject = null; 
+        this.xy = {};  
+      }
+
+    handleMouseMove(e) {
+        if (this.graggableObject) {
+            console.log('2');
+            this.graggableObject.style.cursor = 'pointer';
+            this.graggableObject.style.top = parseInt(this.xy.top) + (e.clientY - this.xy.mtop) + 'px';
+            this.graggableObject.style.left = parseInt(this.xy.left) + (e.clientX - this.xy.mleft) + 'px';
+        }  
     }
 
 }

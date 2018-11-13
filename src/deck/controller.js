@@ -15,14 +15,14 @@ class DeckController {
         this.view.on('edit', this.editTodo.bind(this));
         this.view.on('remove', this.removeTodo.bind(this));
         this.view.on('deleteDeck', this.deleteDeck.bind(this));
+        this.view.on('changeList', this.changeList.bind(this));
         this.view.show(this.model.items);
     }
 
     addTodo(title) {
         const item = this.model.addItem({
             id: Date.now(),
-            title,
-            completed: false
+            title
         });
 
         this.view.addItem(item);
@@ -46,6 +46,11 @@ class DeckController {
     removeTodo(id) {
         this.model.removeItem(id);
         this.view.removeItem(id);
+    }
+
+    changeList(list) {
+        this.model.changeList(list);
+        
     }
 }
 

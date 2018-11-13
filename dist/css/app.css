@@ -6,11 +6,12 @@ body {
     padding: 1em;
 }
 
-#todo-list {
+.todo-list {
     list-style: none;
     margin: 0;
-    padding: 5px;
+    padding: 10px 5px;
     background-color: #dfe3e6;
+    position: relative;
 }
 
 .button {
@@ -86,7 +87,7 @@ main {
     height: 100%;
     background: #fff;
     max-width: 300px;
-    margin: 0;
+    margin: 20px;
     border-radius: 2px;
     overflow: hidden;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
@@ -123,9 +124,10 @@ header h1 {
     user-select: none;
     padding: 10px;
     align-items: center;
-    margin: 0 auto 5px;
+    margin: 10px auto;
     box-shadow: 0 1px 0 #bdbdbe;
     cursor: pointer;
+    position: relative;
 }
 
 .todo-item.completed * {
