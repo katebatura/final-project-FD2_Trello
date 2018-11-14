@@ -31,7 +31,14 @@ class DeckView extends EventEmitter {
         const form = createElement('form', {}, input, submit );
         const main = createElement('main', { 'data-id': deckParams.id }, header, ul, form);
         const body = document.getElementsByTagName('body')[0];
+
         body.appendChild(main);
+
+        $( ".todo-list" ).sortable({
+            connectWith: '.todo-list',
+            update: this.updateList.bind(this)
+        });
+              
         return main;
     }
 
@@ -51,9 +58,9 @@ class DeckView extends EventEmitter {
         const editButton = item.querySelector('button.edit');
         const removeButton = item.querySelector('button.remove');
         
-        item.addEventListener('dragstart',this.handleDragStart.bind(this));
-        item.addEventListener('drag',this.handleDrag.bind(this));
-        item.addEventListener('dragend',this.handleDragEnd.bind(this));
+        //item.addEventListener('dragstart',this.handleDragStart.bind(this));
+        //item.addEventListener('drag',this.handleDrag.bind(this));
+        //item.addEventListener('dragend',this.handleDragEnd.bind(this));
         
         //item.addEventListener('mousemove', this.handleMouseMove.bind(this));
         //item.addEventListener('mousedown', this.handleMouseDown.bind(this));
@@ -150,10 +157,11 @@ class DeckView extends EventEmitter {
     }
 
     handleDrag(e) { 
-        
+        this.dragToDo.style.opacity = '0';        
     }
 
     handleDragEnd(e) {
+        this.dragToDo.style.opacity = '1';   
         this.dragToDo = null;
     }
 
@@ -163,9 +171,43 @@ class DeckView extends EventEmitter {
          }
     }
 
+    updateList(e,ui) {
+       // $( ".todo-list" ).sortable('refresh');
+       console.log(ui.sender)
+        if(ui.sender) {
+            var itemsSender = $(ui.sender);
+            var listSender = [];
+            console.log(itemsSender);
+            itemsSender.forEach(item => {
+                let id = item.getAttribute('data-id');
+                let title = item.textContent;
+            
+                listSender.push({id,title});
+            });
+
+            console.log(listSender);
+            this.emit('changeList', listSender);
+        }
+        var items = Array.from(this.list.getElementsByClassName('todo-item'));
+        var list = [];
+            console.log(items);
+            items.forEach(item => {
+                let id = item.getAttribute('data-id');
+                let title = item.textContent;
+            
+                list.push({id,title});
+            });
+
+            console.log(list);
+            this.emit('changeList', list);
+    }
+
     listDrop(e) {
         e.preventDefault;
-        if (this.dragToDo) {  
+        if (this.dragToDo) { 
+            console.log(e.currentTarget.parentNode)
+            //this.emit('checkDeck');
+
             e.target.appendChild(this.dragToDo);
             
             var items = Array.from(this.list.getElementsByClassName('todo-item'));
