@@ -10,13 +10,6 @@ class DeckView extends EventEmitter {
         this.list = this.main.getElementsByClassName('todo-list')[0];
         this.delButton = this.main.getElementsByClassName('delButton')[0];
 
-        this.dragToDo = null;
-        this.graggableObject = null;
-        this.xy = {};
-
-        this.list.addEventListener('drop', this.listDrop.bind(this));
-        this.list.addEventListener('dragover', this.listDragOver.bind(this));
-
         this.form.addEventListener('submit', this.handleAdd.bind(this));
         this.delButton.addEventListener('click', this.handleDeleteDeck.bind(this));
     }
@@ -34,7 +27,7 @@ class DeckView extends EventEmitter {
 
         body.appendChild(main);
 
-        $( ".todo-list" ).sortable({
+        $( ".todo-list", main ).sortable({
             connectWith: '.todo-list',
             update: this.updateList.bind(this)
         });
@@ -58,14 +51,6 @@ class DeckView extends EventEmitter {
         const editButton = item.querySelector('button.edit');
         const removeButton = item.querySelector('button.remove');
         
-        //item.addEventListener('dragstart',this.handleDragStart.bind(this));
-        //item.addEventListener('drag',this.handleDrag.bind(this));
-        //item.addEventListener('dragend',this.handleDragEnd.bind(this));
-        
-        //item.addEventListener('mousemove', this.handleMouseMove.bind(this));
-        //item.addEventListener('mousedown', this.handleMouseDown.bind(this));
-        //item.addEventListener('mouseup', this.handleMouseUp.bind(this));
-
         editButton.addEventListener('click', this.handleEdit.bind(this));
         removeButton.addEventListener('click', this.handleRemove.bind(this));
 
@@ -151,103 +136,18 @@ class DeckView extends EventEmitter {
         this.list.removeChild(listItem);
     }
     
-    handleDragStart(e) {
-        this.dragToDo = e.currentTarget;
-        
-    }
-
-    handleDrag(e) { 
-        this.dragToDo.style.opacity = '0';        
-    }
-
-    handleDragEnd(e) {
-        this.dragToDo.style.opacity = '1';   
-        this.dragToDo = null;
-    }
-
-    listDragOver(e) {
-        if (e.target.className == "todo-list") {
-            e.preventDefault();
-         }
-    }
 
     updateList(e,ui) {
-       // $( ".todo-list" ).sortable('refresh');
-       console.log(ui.sender)
-        if(ui.sender) {
-            var itemsSender = $(ui.sender);
-            var listSender = [];
-            console.log(itemsSender);
-            itemsSender.forEach(item => {
-                let id = item.getAttribute('data-id');
-                let title = item.textContent;
-            
-                listSender.push({id,title});
-            });
-
-            console.log(listSender);
-            this.emit('changeList', listSender);
-        }
-        var items = Array.from(this.list.getElementsByClassName('todo-item'));
+        console.log(ui.item);
         var list = [];
-            console.log(items);
-            items.forEach(item => {
-                let id = item.getAttribute('data-id');
-                let title = item.textContent;
+        var itemId = ui.item.parent().children().each((item,html) => {
+                let id = html.getAttribute('data-id');
+                let title = html.textContent;
             
                 list.push({id,title});
-            });
-
-            console.log(list);
-            this.emit('changeList', list);
-    }
-
-    listDrop(e) {
-        e.preventDefault;
-        if (this.dragToDo) { 
-            console.log(e.currentTarget.parentNode)
-            //this.emit('checkDeck');
-
-            e.target.appendChild(this.dragToDo);
-            
-            var items = Array.from(this.list.getElementsByClassName('todo-item'));
-            var list = [];
-            console.log(items);
-            items.forEach(item => {
-                let id = item.getAttribute('data-id');
-                let title = item.textContent;
-            
-                list.push({id,title});
-            });
-
-            console.log(list);
-        }
+        });
+        console.log(list);
         this.emit('changeList', list);
-    }
-
-    handleMouseDown(e) {
-        console.log('hi');
-        this.graggableObject = e.target;   
-        this.graggableObject.style.cursor = 'pointer';
-        var s = this.graggableObject.getBoundingClientRect();
-        this.xy.top = s.top; 
-        this.xy.left = s.left; 
-        this.xy.mtop = e.clientY; 
-        this.xy.mleft = e.clientX;
-    }
-    handleMouseUp(e) {
-        this.graggableObject.style.cursor = 'default';
-        this.graggableObject = null; 
-        this.xy = {};  
-      }
-
-    handleMouseMove(e) {
-        if (this.graggableObject) {
-            console.log('2');
-            this.graggableObject.style.cursor = 'pointer';
-            this.graggableObject.style.top = parseInt(this.xy.top) + (e.clientY - this.xy.mtop) + 'px';
-            this.graggableObject.style.left = parseInt(this.xy.left) + (e.clientX - this.xy.mleft) + 'px';
-        }  
     }
 
 }

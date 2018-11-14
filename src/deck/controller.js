@@ -16,6 +16,7 @@ class DeckController {
         this.view.on('remove', this.removeTodo.bind(this));
         this.view.on('deleteDeck', this.deleteDeck.bind(this));
         this.view.on('changeList', this.changeList.bind(this));
+        this.view.on('findItem', this.findItem.bind(this));
         this.view.show(this.model.items);
     }
 
@@ -51,6 +52,9 @@ class DeckController {
     changeList(list) {
         this.model.changeList(list);
         
+    }
+    findItem(list) {
+        this.model.changeList(list);
     }
 }
 
