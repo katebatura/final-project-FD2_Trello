@@ -138,16 +138,27 @@ class DeckView extends EventEmitter {
     
 
     updateList(e,ui) {
-        console.log(ui.item);
-        var list = [];
-        var itemId = ui.item.parent().children().each((item,html) => {
-                let id = html.getAttribute('data-id');
-                let title = html.textContent;
+        // console.log(ui.item);
+        // var list = [];
+        // ui.item.parent().children().each((item,html) => {
+        //         let id = html.getAttribute('data-id');
+        //         let title = html.textContent;
             
-                list.push({id,title});
-        });
-        console.log(list);
-        this.emit('changeList', list);
+        //         list.push({id,title});
+        // });
+        // console.log(list);
+        // this.emit('changeList', list);
+
+        var list2 = [];
+        console.log(Array.from(this.list.children));
+        Array.from(this.list.children).forEach(item => {
+            let id = item.getAttribute('data-id');
+            let title = item.textContent;
+
+            list2.push({id,title});
+        })
+        console.log(list2);
+        this.emit('changeList', list2);
     }
 
 }
