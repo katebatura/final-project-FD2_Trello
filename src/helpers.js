@@ -59,6 +59,11 @@ function deleteDeck(id) {
     localStorage.setItem('todos', string);
 }
 
+function changeDeckList(newState) {
+    const string = JSON.stringify(newState);
+    localStorage.setItem('todos', string);
+}
+
 function save(data) {
     const string = JSON.stringify(data);
     localStorage.setItem('todos', string);
@@ -73,4 +78,4 @@ function load() {
 
 
 
-export { createElement, EventEmitter, save, load, saveDeck, deleteDeck };
+export { createElement, EventEmitter, save, load, saveDeck, deleteDeck, changeDeckList };

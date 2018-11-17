@@ -1,4 +1,4 @@
-import { saveDeck, deleteDeck } from '../helpers';
+import { saveDeck, deleteDeck, changeDeckList } from '../helpers';
 import Model from './model';
 import View from './view';
 
@@ -16,6 +16,7 @@ class DeckController {
         this.view.on('remove', this.removeTodo.bind(this));
         this.view.on('deleteDeck', this.deleteDeck.bind(this));
         this.view.on('changeList', this.changeList.bind(this));
+        this.view.on('changeDeckList', this.changeDeckList.bind(this));
         this.view.show(this.model.items);
     }
 
@@ -51,6 +52,9 @@ class DeckController {
     changeList(list) {
         this.model.changeList(list);
         
+    }
+    changeDeckList(DeckList) {
+        changeDeckList(DeckList);
     }
 }
 
