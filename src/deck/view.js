@@ -1,4 +1,4 @@
-import { EventEmitter, createElement } from '../helpers';
+ import { EventEmitter, createElement } from '../helpers';
 
 class DeckView extends EventEmitter {
     constructor(deckParams) {
@@ -12,6 +12,7 @@ class DeckView extends EventEmitter {
 
         this.form.addEventListener('submit', this.handleAdd.bind(this));
         this.delButton.addEventListener('click', this.handleDeleteDeck.bind(this));
+
     }
 
     createDeck(deckParams) {
@@ -78,7 +79,6 @@ class DeckView extends EventEmitter {
     }
 
 
-
     handleEdit({ target }) {
         const listItem = target.parentNode;
         const id = listItem.getAttribute('data-id');
@@ -94,7 +94,18 @@ class DeckView extends EventEmitter {
             input.value = label.textContent;
             editButton.classList.toggle('save');
             listItem.classList.add('editing');
-            input.focus();
+            input.focus();            
+            input.addEventListener('keypress', this.startEditingWithEnter.bind(this));      
+        }        
+    }
+
+    startEditingWithEnter(e) {
+        const listItem = e.target.parentNode;
+        const id = listItem.getAttribute('data-id');
+        const input = listItem.querySelector('.textfield');
+        const title = input.value;
+        if( e.keyCode == 13 ) {
+            this.emit('edit', { id, title });
         }
     }
 
@@ -128,6 +139,7 @@ class DeckView extends EventEmitter {
         label.textContent = todo.title;
         editButton.classList.toggle('save');
         listItem.classList.remove('editing');
+        input.removeEventListener('keypress', this.startEditingWithEnter.bind(this)); 
     }
 
     removeItem(id) {
