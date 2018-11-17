@@ -9,6 +9,8 @@ class DeckView extends EventEmitter {
         this.input = this.main.getElementsByClassName('input')[0];
         this.list = this.main.getElementsByClassName('todo-list')[0];
         this.delButton = this.main.getElementsByClassName('delButton')[0];
+        this.editingItem = null;
+        this.editingButton = null;
 
         this.form.addEventListener('submit', this.handleAdd.bind(this));
         this.delButton.addEventListener('click', this.handleDeleteDeck.bind(this));
@@ -85,6 +87,7 @@ class DeckView extends EventEmitter {
         const label = listItem.querySelector('.title');
         const input = listItem.querySelector('.textfield');
         const editButton = listItem.querySelector('button.edit');
+        this.editingButton = editButton;
         const title = input.value;
         const isEditing = listItem.classList.contains('editing');
 
@@ -95,8 +98,11 @@ class DeckView extends EventEmitter {
             editButton.classList.toggle('save');
             listItem.classList.add('editing');
             input.focus();            
-            input.addEventListener('keypress', this.startEditingWithEnter.bind(this));      
-        }        
+            this.editingItem = listItem;
+
+            input.addEventListener('keypress', this.startEditingWithEnter.bind(this));   
+            window.addEventListener('mousedown', this.startEditingWithClick.bind(this));     
+        }  
     }
 
     startEditingWithEnter(e) {
@@ -107,6 +113,19 @@ class DeckView extends EventEmitter {
         if( e.keyCode == 13 ) {
             this.emit('edit', { id, title });
         }
+    }
+
+    startEditingWithClick(e) {
+        if(e.target != this.editingButton) {
+            const id = this.editingItem.getAttribute('data-id');
+            const input = this.editingItem.querySelector('.textfield');
+            const title = input.value;
+            const isEditing = this.editingItem.classList.contains('editing');
+            if (isEditing) {
+                this.emit('edit', { id, title });
+            }   
+        }
+        
     }
 
     handleRemove({ target }) {
@@ -140,6 +159,7 @@ class DeckView extends EventEmitter {
         editButton.classList.toggle('save');
         listItem.classList.remove('editing');
         input.removeEventListener('keypress', this.startEditingWithEnter.bind(this)); 
+        window.removeEventListener('mousedown', this.startEditingWithClick.bind(this)); 
     }
 
     removeItem(id) {
