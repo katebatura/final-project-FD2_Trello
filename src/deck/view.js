@@ -4,7 +4,7 @@ class DeckView extends EventEmitter {
     constructor(deckParams) {
         super();
 
-        this.main = this.createDeck(deckParams);
+        this.main = this.createDeck(deckParams); //создание колонки
         this.form = this.main.getElementsByTagName('form')[0];
         this.input = this.main.getElementsByClassName('input')[0];
         this.list = this.main.getElementsByClassName('todo-list')[0];
@@ -15,6 +15,7 @@ class DeckView extends EventEmitter {
         this.form.addEventListener('submit', this.handleAdd.bind(this));
         this.delButton.addEventListener('click', this.handleDeleteDeck.bind(this));
 
+        //сортировка колонок
         $( document.body ).sortable({
             items: "main",
             update: this.changeDeckList.bind(this)
@@ -35,6 +36,7 @@ class DeckView extends EventEmitter {
 
         body.appendChild(main);
 
+        //сортировка ToDo в колонке
         $( ".todo-list", main ).sortable({
             connectWith: '.todo-list',
             update: this.updateList.bind(this)
@@ -79,13 +81,11 @@ class DeckView extends EventEmitter {
         this.emit('add', value);
     }
 
-
-
     handleDeleteDeck() {
         this.emit('deleteDeck');
     }
 
-
+    //при нажатии на кнопку edit для ToDo
     handleEdit({ target }) {
         const listItem = target.parentNode;
         const id = listItem.getAttribute('data-id');
@@ -105,6 +105,8 @@ class DeckView extends EventEmitter {
             input.focus();            
             this.editingItem = listItem;
 
+            //добавляем обработчики событий, чтобы изменения сохранялись при нажатии Enter 
+            //или любой точки экрана вне input
             input.addEventListener('keypress', this.startEditingWithEnter.bind(this));   
             window.addEventListener('mousedown', this.startEditingWithClick.bind(this));     
         }  
@@ -153,7 +155,7 @@ class DeckView extends EventEmitter {
         this.list.appendChild(listItem);
     }
 
-    
+    //после сохранения изменений в LocalStorage при редактировании ToDo
     editItem(todo) {
         const listItem = this.findListItem(todo.id);
         const label = listItem.querySelector('.title');
@@ -173,7 +175,7 @@ class DeckView extends EventEmitter {
         this.list.removeChild(listItem);
     }
     
-
+    //функция, срабатывающая при перетаскивании ToDo
     updateList(e,ui) {
         // console.log(ui.item);
         // var list = [];
@@ -186,27 +188,31 @@ class DeckView extends EventEmitter {
         // console.log(list);
         // this.emit('changeList', list);
 
-        var list2 = [];
+        var list2 = [];//массив из ToDo-списка
         console.log(Array.from(this.list.children));
         Array.from(this.list.children).forEach(item => {
+            //для каждого ToDo возвращаем хэш с параметрами id,title
             let id = item.getAttribute('data-id');
             let title = item.textContent;
 
             list2.push({id,title});
         })
         console.log(list2);
+        //publish подписку changeList
         this.emit('changeList', list2);
     }
 
+    //функция, срабатывающая при перетаскивании колонок
     changeDeckList(e,ui) {
-        var DeckList = [];
+        var DeckList = []; //создаем массив с новым порядком колонок в нем
+        //для каждой колонки возвращаем хэш с параметрами id,title,lines
         ui.item.parent().children().filter('main').each((item,html) => {
            let id = html.getAttribute('data-id');
            let title = html.querySelector('h1').textContent;
-           let lines = [];
-           console.log(html.querySelectorAll('.todo-item'));
+           let lines = [];//массив из ToDo-списка для этой колонки
            let list = html.querySelectorAll('.todo-item');
            if(list) {
+            //для каждого ToDo возвращаем хэш с параметрами id,title
             list.forEach( item => {
                     let id = item.getAttribute('data-id');
                     let title = item.textContent;
@@ -215,6 +221,7 @@ class DeckView extends EventEmitter {
             }
             DeckList.push({id,title,lines})
         });
+        //publish подписку changeDeckList
         this.emit('changeDeckList', DeckList);
     }
 

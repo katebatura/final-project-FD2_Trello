@@ -20,17 +20,17 @@ function createElement(tag, props, ...children) {
     return element;
 }
 
-class EventEmitter {
+class EventEmitter {//аналог PubSub
     constructor() {
         this.events = {};
     }
 
-    on(type, listener) {
+    on(type, listener) {//subscribe
         this.events[type] = this.events[type] || [];
         this.events[type].push(listener);
     }
 
-    emit(type, arg) {
+    emit(type, arg) {//publish
         if (this.events[type]) {
             this.events[type].forEach(listener => listener(arg));
         }
