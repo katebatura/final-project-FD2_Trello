@@ -1,5 +1,3 @@
-import Controller from './controller';
-import ControllerStart from './controllerStart';
 
 class Router {
     constructor(map, rootElement) {
@@ -34,32 +32,6 @@ class Router {
       this.loaded = true;
     }
   }
-
-  new Router({
-    '#clock1': {
-      pageName:'Test page 1',
-      runController: rootElement => {
-        new Controller(
-          new Model("Test page 1"),
-          new View(rootElement));
-      }
-    },
-    '#clock2': {
-      pageName:'Test page 2',
-      runController: rootElement => {
-        new Controller(
-          new Model("Test page 2"),
-          new View(rootElement));
-      }
-    },
-    '#clock3': {
-      pageName:'Test page 3',
-      runController: rootElement => {
-        new Controller(
-          new Model("Test page 3"),
-          new View(rootElement));
-      }
-    }
-  }, document.body).navigateTo('#clock2');
+ 
 
   export default Router;
