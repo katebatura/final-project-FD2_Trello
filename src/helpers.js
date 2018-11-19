@@ -42,7 +42,7 @@ function saveDeck(state) {
         if (state.id === item.id) {
             return {
                 id: item.id,
-                title: item.title,
+                title: state.title,
                 lines: state.items,
             }
         }

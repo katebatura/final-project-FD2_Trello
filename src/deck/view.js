@@ -11,9 +11,13 @@ class DeckView extends EventEmitter {
         this.delButton = this.main.getElementsByClassName('delButton')[0];
         this.editingItem = null;
         this.editingButton = null;
+        this.id = deckParams.id;
+        this.title = deckParams.title;
+        this.lines = deckParams.lines;
 
         this.form.addEventListener('submit', this.handleAdd.bind(this));
         this.delButton.addEventListener('click', this.handleDeleteDeck.bind(this));
+        this.main.querySelector('.renameInput').addEventListener('keypress', this.renameDeck.bind(this));              
 
         //сортировка колонок
         $( document.body ).sortable({
@@ -25,8 +29,9 @@ class DeckView extends EventEmitter {
 
     createDeck(deckParams) {
         const h1 = createElement('h1', {}, deckParams.title);
+        const renameInput = createElement('input', {type: 'text', className: 'renameInput'});
         const delButton = createElement('button', {className: 'delButton'}, 'Удалить доску');
-        const header = createElement('header', {}, h1, delButton);
+        const header = createElement('header', {}, h1, renameInput, delButton);
         const ul = createElement('div', {className: 'todo-list'});
         const input = createElement('input', {type: 'text', className: 'input'});
         const submit = createElement('input', {type: 'submit', className: 'button', value: 'Добавить'});
@@ -41,7 +46,17 @@ class DeckView extends EventEmitter {
             connectWith: '.todo-list',
             update: this.updateList.bind(this)
         });
-              
+
+        //переименование колонки
+        $( 'h1', main ).dblclick(function(e) {
+            const text = $(this).text();
+            $(this).hide().next('input').val(text).show().focus();
+        });
+        $('.renameInput', main)
+            .hide()
+            .blur(function(e) {
+                $(this).hide().prev('h1').show();
+            });
         return main;
     }
 
@@ -65,6 +80,16 @@ class DeckView extends EventEmitter {
         removeButton.addEventListener('click', this.handleRemove.bind(this));
 
         return item;
+    }
+
+    renameDeck(e) {
+        if(e.keyCode == 13){
+            const text = $('.renameInput', this.main).val();
+            $('.renameInput', this.main).hide().prev('h1').text(text).show();            
+            this.title = text;
+            let deckParams = {id: this.id, title: this.title, lines: this.lines}
+            this.emit('renameDeck', deckParams)
+        }
     }
 
     findListItem(id) {
@@ -155,7 +180,7 @@ class DeckView extends EventEmitter {
         this.list.appendChild(listItem);
     }
 
-    //после сохранения изменений в LocalStorage при редактировании ToDo
+    
     editItem(todo) {
         const listItem = this.findListItem(todo.id);
         const label = listItem.querySelector('.title');
@@ -175,7 +200,7 @@ class DeckView extends EventEmitter {
         this.list.removeChild(listItem);
     }
     
-    //функция, срабатывающая при перетаскивании ToDo
+
     updateList(e,ui) {
         // console.log(ui.item);
         // var list = [];
@@ -188,17 +213,15 @@ class DeckView extends EventEmitter {
         // console.log(list);
         // this.emit('changeList', list);
 
-        var list2 = [];//массив из ToDo-списка
+        var list2 = [];
         console.log(Array.from(this.list.children));
         Array.from(this.list.children).forEach(item => {
-            //для каждого ToDo возвращаем хэш с параметрами id,title
             let id = item.getAttribute('data-id');
             let title = item.textContent;
 
             list2.push({id,title});
         })
         console.log(list2);
-        //publish подписку changeList
         this.emit('changeList', list2);
     }
 
@@ -221,7 +244,6 @@ class DeckView extends EventEmitter {
             }
             DeckList.push({id,title,lines})
         });
-        //publish подписку changeDeckList
         this.emit('changeDeckList', DeckList);
     }
 

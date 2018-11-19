@@ -63,6 +63,15 @@ class DeckModel extends EventEmitter {
         
         return items;
     }
+
+    renameDeck(deckParams) {
+        this.title = deckParams.title;
+        this.emit('change', {
+            id: this.id,
+            title: this.title,
+            items: this.items,
+        });
+    }
 }
 
 export default DeckModel;
