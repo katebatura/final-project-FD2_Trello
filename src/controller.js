@@ -6,8 +6,7 @@ class Controller {
     constructor() {
         this.model = new Model();
         this.view = new View();
-        this.button = document.getElementById('add');
-        this.button.addEventListener('click', this.addDeck.bind(this));
+        this.view.on('addDeck', this.addDeck.bind(this));
         this.model.on('change', state => {
             new DeckController(state);
         });

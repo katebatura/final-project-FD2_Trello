@@ -30,7 +30,7 @@ class DeckView extends EventEmitter {
     createDeck(deckParams) {
         const h1 = createElement('h1', {}, deckParams.title);
         const renameInput = createElement('input', {type: 'text', className: 'renameInput'});
-        const delButton = createElement('button', {className: 'delButton'}, 'Удалить доску');
+        const delButton = createElement('button', {className: 'delButton'}, 'Удалить колонку');
         const header = createElement('header', {}, h1, renameInput, delButton);
         const ul = createElement('div', {className: 'todo-list'});
         const input = createElement('input', {type: 'text', className: 'input'});
