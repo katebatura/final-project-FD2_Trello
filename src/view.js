@@ -10,12 +10,11 @@ class View extends EventEmitter {
 
     createAddButton() {
         const addButton = createElement('button', {className: 'add'}, 'Создать колонку');
-        const body = document.getElementsByTagName('body')[0];
-        const script = body.getElementsByTagName('script')[0];
+        const page = document.getElementById('page');
 
         addButton.addEventListener('click', () => {this.emit('addDeck')} );
 
-        body.insertBefore(addButton,script);
+        page.appendChild(addButton);
     }
 }
 

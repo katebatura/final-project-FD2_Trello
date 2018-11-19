@@ -37,9 +37,9 @@ class DeckView extends EventEmitter {
         const submit = createElement('input', {type: 'submit', className: 'button', value: 'Добавить'});
         const form = createElement('form', {}, input, submit );
         const main = createElement('main', { 'data-id': deckParams.id }, header, ul, form);
-        const body = document.getElementsByTagName('body')[0];
+        const page = document.getElementById('page');
 
-        body.appendChild(main);
+        page.appendChild(main);
 
         //сортировка ToDo в колонке
         $( ".todo-list", main ).sortable({
