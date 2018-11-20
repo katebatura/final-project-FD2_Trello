@@ -20,7 +20,7 @@ body {
     border-radius: 4px;
     color: #fff;
     position: relative;
-    margin: 5px 1px 0;
+    margin: 10px 0 0 1px;
     min-width: 64px;
     padding: 0 15px;
     display: block;
@@ -175,6 +175,7 @@ header h1 {
     line-height: 20px;
     position: relative;
     font-size: 14px;
+    height: 40px;
 }
 
 .show-form-add:before {
@@ -196,7 +197,7 @@ header h1 {
 /* Todo form */
 
 form {
-    padding: 0 5px 10px 5px;
+    padding: 0 5px 0 5px;
     display: none;
 }
 
@@ -306,4 +307,29 @@ form .input {
 
 .delButton:hover {
     color: #9b9a9a;
+}
+
+.show-form-add_open {
+    position: relative;
+    left: 120px;
+    top: -35px;
+    border: none;
+    outline: none;
+    background-color: #dfe3e6;
+    cursor: pointer;
+    color: #9b9a9a;
+}
+
+.show-form-add_open:hover {
+    color: #6b808c;
+}
+
+.show-form-add_open:before {
+    content: "×";
+    margin-right: 5px;
+    font-size: 35px;
+    line-height: 14px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

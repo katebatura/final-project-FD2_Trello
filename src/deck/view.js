@@ -119,7 +119,14 @@ class DeckView extends EventEmitter {
         const listItem = target.parentNode;
         const form = listItem.getElementsByTagName('form')[0];
         form.classList.toggle('show-form');
-        target.classList.toggle('hide-form-add');
+
+        if(form.className !== "") {
+            target.innerHTML = "";
+            target.className = "show-form-add_open"
+        } else {
+            target.innerHTML = "Добавить еще одну карточку";
+            target.className = "show-form-add"
+        }
     }
 
     //при нажатии на кнопку edit для ToDo
