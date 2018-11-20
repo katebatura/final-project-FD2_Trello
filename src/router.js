@@ -1,8 +1,18 @@
+import Controller from './controller';
+import ControllerStart from './controllerStart';
+
+  
+const page = document.getElementById('page');
+const activeHash = document.location.hash;
+
 
 class Router {
     constructor(map, rootElement) {
       this.map = map;
       this.rootElement = rootElement;
+      this.controller = new ControllerStart();
+      this.controller.on('changeHash', this._route.bind(this))
+      
       // Подписаться на событие hashchange
       window.addEventListener('hashchange', this.onhashchange.bind(this));
     }
@@ -33,5 +43,20 @@ class Router {
     }
   }
  
+
+new Router({
+    '#start': {
+      pageName:'start',
+      runController: rootElement => {
+        var a = new ControllerStart();
+      }
+    },
+    activeHash: {
+      pageName:'decks',
+      runController: rootElement => {
+        new Controller();
+      }
+    }
+  }, page).navigateTo(activeHash);
 
   export default Router;
