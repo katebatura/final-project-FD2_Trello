@@ -36,7 +36,7 @@ class ModelStart {
         $.ajax( {
             url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
             data : { f : 'UPDATE', n : this.stringName, v : JSON.stringify(info), p : this.updatePassword },
-            success : (e) => location.hash = encodeURIComponent( newState ), 
+            success : location.hash = encodeURIComponent( newState ), 
             error : this.errorHandler.bind(this)
             }
         );
@@ -57,10 +57,10 @@ class ModelStart {
     }
     
     getValueReady(callresult) {
-        let newState = encodeURIComponent(this.key);
+        let newState = 'decks';
         var info = JSON.parse(callresult.result); 
         if ( info[this.key] && info[this.key] == this.password ) {
-            return newState ;
+            location.hash = encodeURIComponent(newState);
         } else {
             console.log("Информации о " +  this.key + " нет")
         }

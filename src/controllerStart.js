@@ -18,8 +18,7 @@ class ControllerStart extends EventEmitter{
     }
 
     enter({login, password}) {
-        let route = this.model.enter(login, password);
-        this.emit('changeHash', route)
+        this.model.enter(login, password);
     }
 
 }

@@ -1,20 +1,24 @@
 import Controller from './controller';
 import ControllerStart from './controllerStart';
 
-  
-const page = document.getElementById('page');
+
 const activeHash = document.location.hash;
 
 
 class Router {
-    constructor(map, rootElement) {
-      this.map = map;
-      this.rootElement = rootElement;
-      this.controller = new ControllerStart();
-      this.controller.on('changeHash', this._route.bind(this))
+    constructor() {
+      this.rootElement = document.getElementById('page');
+      this.Controller = null;
+      this.ControllerStart = null;
       
       // Подписаться на событие hashchange
       window.addEventListener('hashchange', this.onhashchange.bind(this));
+
+      if (!localStorage.user) { //!localStorage.user - при пустом попадаем на промо
+        this.navigateTo('#start');
+        } else {
+            this.navigateTo('#decks');
+        }
     }
 
     onhashchange(e) {
@@ -24,17 +28,19 @@ class Router {
     }
 
     _route(route) {
-      const settings = this.map[route];
-      if (settings) {
-        this.rootElement.innerHTML = '';
-        // запустить контроллер страницы,
-        // которая соответствует адресу,
-        // на который нужно перейти
-        settings.runController(this.rootElement);
-      }
+        route = route.substr(1);
+        if (route === 'start') {        
+            this.rootElement.innerHTML = '';
+            this.ControllerStart = new ControllerStart();
+        }  else { if(route === 'decks') {                  
+                this.rootElement.innerHTML = '';
+                this.Controller = new Controller();
+            }            
+        }
     }
 
     navigateTo(route) {
+        route = route.substr(1);
       // Выполнить начальную навигацию на адрес по умолчанию
       if (document.location.hash === route && this.loaded) return;
       this._route(route);
@@ -43,20 +49,5 @@ class Router {
     }
   }
  
-
-new Router({
-    '#start': {
-      pageName:'start',
-      runController: rootElement => {
-        var a = new ControllerStart();
-      }
-    },
-    activeHash: {
-      pageName:'decks',
-      runController: rootElement => {
-        new Controller();
-      }
-    }
-  }, page).navigateTo(activeHash);
-
+  
   export default Router;
