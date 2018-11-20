@@ -17,7 +17,10 @@ class DeckView extends EventEmitter {
 
         this.form.addEventListener('submit', this.handleAdd.bind(this));
         this.delButton.addEventListener('click', this.handleDeleteDeck.bind(this));
-        this.main.querySelector('.renameInput').addEventListener('keypress', this.renameDeck.bind(this));              
+        this.main.querySelector('.renameInput').addEventListener('keypress', this.renameDeck.bind(this));
+        
+        this.btnShowFormAdd = this.main.getElementsByClassName('show-form-add')[0];
+        this.btnShowFormAdd.addEventListener('click', this.handleShowFormAddTodo.bind(this));
 
         //сортировка колонок
         $( document.body ).sortable({
@@ -36,7 +39,8 @@ class DeckView extends EventEmitter {
         const input = createElement('input', {type: 'text', className: 'input'});
         const submit = createElement('input', {type: 'submit', className: 'button', value: 'Добавить'});
         const form = createElement('form', {}, input, submit );
-        const main = createElement('main', { 'data-id': deckParams.id }, header, ul, form);
+        const btnShowFormAdd = createElement('button', {className: 'show-form-add'}, 'Добавить еще одну карточку');
+        const main = createElement('main', { 'data-id': deckParams.id }, header, ul, form, btnShowFormAdd);
         const body = document.getElementsByTagName('body')[0];
 
         body.appendChild(main);
@@ -108,6 +112,14 @@ class DeckView extends EventEmitter {
 
     handleDeleteDeck() {
         this.emit('deleteDeck');
+    }
+
+    //btn show add Todo
+    handleShowFormAddTodo({ target }) {
+        const listItem = target.parentNode;
+        const form = listItem.getElementsByTagName('form')[0];
+        form.classList.toggle('show-form');
+        target.classList.toggle('hide-form-add');
     }
 
     //при нажатии на кнопку edit для ToDo
