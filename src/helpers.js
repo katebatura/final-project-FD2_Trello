@@ -36,8 +36,8 @@ class EventEmitter {//аналог PubSub
         }
     }
 }
-function saveDeck(state) {
-    const currentState = load();
+function saveDeck(state,user) {
+    const currentState = load(user);
     const newState = currentState.map(item => {
         if (state.id === item.id) {
             return {
@@ -49,28 +49,28 @@ function saveDeck(state) {
         return item;
     })
     const string = JSON.stringify(newState);
-    localStorage.setItem('todos', string);
+    localStorage.setItem(user, string);
 }
 
-function deleteDeck(id) {
-    const currentState = load();
+function deleteDeck(id,user) {
+    const currentState = load(user);
     const newState = currentState.filter(item => id !== item.id);
     const string = JSON.stringify(newState);
-    localStorage.setItem('todos', string);
+    localStorage.setItem(user, string);
 }
 
-function changeDeckList(newState) {
+function changeDeckList(newState,user) {
     const string = JSON.stringify(newState);
-    localStorage.setItem('todos', string);
+    localStorage.setItem(user, string);
 }
 
-function save(data) {
+function save(data,user) {
     const string = JSON.stringify(data);
-    localStorage.setItem('todos', string);
+    localStorage.setItem(user, string);
 }
 
-function load() {
-    const string = localStorage.getItem('todos');
+function load(user) {
+    const string = localStorage.getItem(user);
     const data = JSON.parse(string);
     return data;
 }

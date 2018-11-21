@@ -12,7 +12,7 @@ class ModelStart {
     }
 
     start(login, password) {    
-
+        this.key = login;
         this.info[login] = password;
 
         this.updatePassword = Math.random();
@@ -21,12 +21,11 @@ class ModelStart {
             {
                 url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
                 data : { f : 'LOCKGET', n : this.stringName, p: this.updatePassword },
-                success :  this.AddValueReady.bind(this), 
-                error : this.errorHandler.bind(this)
+                success :  this.AddValueReady.bind(this), error : this.errorHandler.bind(this)
             }            
         );
 
-        
+        return this.key        
     }
     
     AddValueReady() {
@@ -36,8 +35,7 @@ class ModelStart {
         $.ajax( {
             url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
             data : { f : 'UPDATE', n : this.stringName, v : JSON.stringify(info), p : this.updatePassword },
-            success : location.hash = encodeURIComponent( newState ), 
-            error : this.errorHandler.bind(this)
+            success : location.hash = encodeURIComponent(newState), error : this.errorHandler.bind(this)
             }
         );
     }
@@ -50,10 +48,11 @@ class ModelStart {
             {
                 url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
                 data : { f : 'READ', n : this.stringName },
-                success : this.getValueReady.bind(this),
-                error : this.errorHandler.bind(this)
+                success : this.getValueReady.bind(this), error : this.errorHandler.bind(this)
             }
         );
+
+        return this.key;
     }
     
     getValueReady(callresult) {
@@ -61,6 +60,7 @@ class ModelStart {
         var info = JSON.parse(callresult.result); 
         if ( info[this.key] && info[this.key] == this.password ) {
             location.hash = encodeURIComponent(newState);
+           
         } else {
             console.log("Информации о " +  this.key + " нет")
         }

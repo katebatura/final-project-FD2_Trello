@@ -2,9 +2,10 @@ import { EventEmitter } from './helpers';
 import { save, load } from './helpers';
 
 class Model extends EventEmitter {
-    constructor() {
+    constructor(user) {
         super();
-        this.decks = load() || [];
+        this.user = user;
+        this.decks = load(this.user) || [];
     }
 
     addDeck() {
@@ -19,7 +20,7 @@ class Model extends EventEmitter {
         };
         this.decks.push(newDeck);
         this.emit('change', newDeck);
-        save(this.decks);
+        save(this.decks,this.user);
     }
 
 
