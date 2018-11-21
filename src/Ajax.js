@@ -1,17 +1,16 @@
 
 var ajaxHandlerScript="http://fe.it-academy.by/AjaxStringStorage2.php";
 
-class ModelStart {
+class Ajax {
     constructor() {
         this.info = {};
-        this.stringName = 'NOGOVITSYNA_Trello';
+        this.stringName = 'NOGOVITSYNA_TRELLO_USERS';
         this.updatePassword = null;   
         this.key = null;
-        this.password  = null;
+        this.value = null;
         this.getKeys();
+       
     }
-
-    
     getKeys() {
 
         $.ajax(
@@ -29,28 +28,25 @@ class ModelStart {
 
         this.info = info || {};
     }
+        
+    addValue(key, value) {       
+        
+            this.info[key] = value;
 
-    start(login, password) {   
-        this.key = login;
-        this.info[login] = password; 
-
-        this.updatePassword = Math.random();
+            this.updatePassword = Math.random();
             
-        $.ajax(
-            {
-                url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
-                data : { f : 'LOCKGET', n : this.stringName, p: this.updatePassword },
-                success :  this.AddValueReady.bind(this), error : this.errorHandler.bind(this)
-            }            
-        );
-
-        return this.key        
+            $.ajax(
+                {
+                    url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+                    data : { f : 'LOCKGET', n : this.stringName, p: this.updatePassword },
+                    success :  this.AddValueReady.bind(this), error : this.errorHandler.bind(this)
+                }            
+            );
+        
     }
-    
+
     AddValueReady() {
         var info = this.info;
-        let newState = 'decks';
-
         $.ajax( {
             url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
             data : { f : 'UPDATE', n : this.stringName, v : JSON.stringify(info), p : this.updatePassword },
@@ -59,9 +55,8 @@ class ModelStart {
         );
     }
 
-    enter(login, password) {
-        this.key = login;
-        this.password = password;
+    getValue(key) {
+        this.key = key;
 
         $.ajax(
             {
@@ -71,19 +66,18 @@ class ModelStart {
             }
         );
 
-        return this.key;
+        return this.value;
     }
-    
+
     getValueReady(callresult) {
-        let newState = 'decks';
         var info = JSON.parse(callresult.result); 
-        if ( info[this.key] && info[this.key] == this.password ) {
-            location.hash = encodeURIComponent(newState);
-           
+        if (info[this.key]) {
+            this.value = info[this.key];
         } else {
             console.log("Информации о " +  this.key + " нет")
         }
     }
+
 
     errorHandler(jqXHR,statusStr,errorStr) {
         alert(statusStr+' '+errorStr);
@@ -91,4 +85,4 @@ class ModelStart {
 
 }
 
-export default ModelStart;
+export default Ajax;

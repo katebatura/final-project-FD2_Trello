@@ -1,3 +1,5 @@
+import Ajax from './Ajax';
+
 function createElement(tag, props, ...children) {
     const element = document.createElement(tag);
 
@@ -68,11 +70,20 @@ function save(data,user) {
     const string = JSON.stringify(data);
     localStorage.setItem(user, string);
     localStorage.setItem('user', user);
+    const ajax = new Ajax();
+    ajax.addValue(user, string);
 }
 
 function load(user) {
-    const string = localStorage.getItem(user);
-    const data = JSON.parse(string);
+    var string = localStorage.getItem(user);
+    var data = JSON.parse(string);
+
+    if(!data) {
+        const ajax = new Ajax();
+        const stringAjax = ajax.getValue(user);
+        data = JSON.parse(stringAjax);
+    }
+
     return data;
 }
 

@@ -11,17 +11,13 @@ class Router {
       
       // Подписаться на событие hashchange
       window.addEventListener('hashchange', this.onhashchange.bind(this));
-      if(this.user &&  document.location.hash === '') {
-        this.navigateTo('decks');
-      } else {
+
       if (document.location.hash === 'start' || document.location.hash === '' || !this.user) { 
         this.navigateTo('start');
         } else {
             this.navigateTo(document.location.hash);
         }
-    }    
-      }
-      
+    }
 
     onhashchange(e) {
       const activeHash = document.location.hash;
