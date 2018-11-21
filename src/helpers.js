@@ -67,6 +67,7 @@ function changeDeckList(newState,user) {
 function save(data,user) {
     const string = JSON.stringify(data);
     localStorage.setItem(user, string);
+    localStorage.setItem('user', user);
 }
 
 function load(user) {
@@ -74,6 +75,7 @@ function load(user) {
     const data = JSON.parse(string);
     return data;
 }
+
 
 
 

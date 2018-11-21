@@ -8,12 +8,33 @@ class ModelStart {
         this.updatePassword = null;   
         this.key = null;
         this.password  = null;
-        
+        this.getKeys();
     }
 
-    start(login, password) {    
+    
+    getKeys() {
+
+        $.ajax(
+            {
+                url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+                data : { f : 'READ', n : this.stringName },
+                success : this.getKeysReady.bind(this), error : this.errorHandler.bind(this)
+            }
+        );
+    }
+
+    getKeysReady(callresult) {
+        
+        var info = JSON.parse(callresult.result);
+
+        this.info = info || {};
+    }
+
+    start(login, password) { 
+        console.log(this.info);   
         this.key = login;
         this.info[login] = password;
+        console.log(this.info);
 
         this.updatePassword = Math.random();
             
@@ -35,7 +56,7 @@ class ModelStart {
         $.ajax( {
             url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
             data : { f : 'UPDATE', n : this.stringName, v : JSON.stringify(info), p : this.updatePassword },
-            success : location.hash = encodeURIComponent(newState), error : this.errorHandler.bind(this)
+            success : (e) => console.log(e, this.info), error : this.errorHandler.bind(this)
             }
         );
     }

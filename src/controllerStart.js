@@ -15,12 +15,12 @@ class ControllerStart extends EventEmitter{
 
     start({login, password}) {
         const user = this.model.start(login, password);
-        this.emit('changeUser',user);
+        this.emit('changeUser', user);
     }
 
     enter({login, password}) {
         const user = this.model.enter(login, password);
-        this.emit('changeUser',user);
+        this.emit('changeUser', user);
     }
 
 }
