@@ -1,6 +1,6 @@
 import ModelStart from "./modelStart";
 import ViewStart from "./viewStart";
-import { EventEmitter} from './helpers';
+import { EventEmitter, load} from './helpers';
 
 class ControllerStart extends EventEmitter{
     constructor() {
@@ -19,6 +19,7 @@ class ControllerStart extends EventEmitter{
     }
 
     enter({login, password}) {
+        load(login);
         const user = this.model.enter(login, password);
         this.emit('changeUser', user);
     }
