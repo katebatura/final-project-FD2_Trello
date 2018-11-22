@@ -34,9 +34,13 @@ class Router {
             this.ControllerStart = new ControllerStart();
             this.ControllerStart.on('changeUser', this.changeUser.bind(this))
         }  else { if(route === 'decks') {    
-                if(!this.user) return;             
-                this.rootElement.innerHTML = '';
-                this.Controller = new Controller(this.user);
+                if(!this.user) {
+                    this.navigateTo('start')    
+                } else {
+                    this.rootElement.innerHTML = '';
+                    this.Controller = new Controller(this.user);
+                }            
+                
             }            
         }
     }
