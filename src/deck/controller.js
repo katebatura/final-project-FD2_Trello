@@ -5,10 +5,11 @@ import View from './view';
 
 
 class DeckController {
-    constructor(deckParams) {
+    constructor(deckParams,user) {
+        this.user = user;
         this.model = new Model(deckParams || undefined);
         this.model.on('change', state => {
-            saveDeck(state);
+           saveDeck(state,this.user);
         });
         this.view = new View(deckParams);
         this.view.on('add', this.addTodo.bind(this));
@@ -33,7 +34,7 @@ class DeckController {
 
     deleteDeck() {
         if ( confirm('Точно удалить?')) {
-        deleteDeck(this.model.id);
+        deleteDeck(this.model.id,this.user);
         window.location.reload();
         }
     }
@@ -55,7 +56,7 @@ class DeckController {
         
     }
     changeDeckList(DeckList) {
-        changeDeckList(DeckList);
+        changeDeckList(DeckList,this.user);
     }
 
     renameDeck(deckParams) {

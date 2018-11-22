@@ -1,3 +1,5 @@
+import Ajax from './Ajax';
+
 function createElement(tag, props, ...children) {
     const element = document.createElement(tag);
 
@@ -36,8 +38,12 @@ class EventEmitter {//аналог PubSub
         }
     }
 }
-function saveDeck(state) {
-    const currentState = load();
+
+
+var ajax = new Ajax();
+
+function saveDeck(state,user) {
+    const currentState = load(user);
     const newState = currentState.map(item => {
         if (state.id === item.id) {
             return {
@@ -49,32 +55,52 @@ function saveDeck(state) {
         return item;
     })
     const string = JSON.stringify(newState);
-    localStorage.setItem('todos', string);
+    localStorage.setItem(user, string);
 }
 
-function deleteDeck(id) {
-    const currentState = load();
+function deleteDeck(id,user) {
+    const currentState = load(user);
     const newState = currentState.filter(item => id !== item.id);
     const string = JSON.stringify(newState);
-    localStorage.setItem('todos', string);
+    localStorage.setItem(user, string);
 }
 
-function changeDeckList(newState) {
+function changeDeckList(newState,user) {
     const string = JSON.stringify(newState);
-    localStorage.setItem('todos', string);
+    localStorage.setItem(user, string);
 }
 
-function save(data) {
+function save(data,user) {
     const string = JSON.stringify(data);
-    localStorage.setItem('todos', string);
+    localStorage.setItem(user, string);
+    localStorage.setItem('user', user);
+    ajax.addValue(user, string);
 }
 
-function load() {
-    const string = localStorage.getItem('todos');
-    const data = JSON.parse(string);
+function load(user) {
+    var string = localStorage.getItem(user);
+    var data = JSON.parse(string);
+
+    if(!data) {
+        function get() {
+            return new Promise((resolve,reject)=>{                
+                ajax.getValue(user);
+                 resolve(); 
+            })
+        }
+       
+        get().then(()=> {
+            setTimeout(()=>{
+               var string = localStorage.getItem(user);
+            data = JSON.parse(string); 
+            },3000)
+            
+        })
+        
+    }
+
     return data;
 }
-
 
 
 

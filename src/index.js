@@ -1,3 +1,4 @@
-import Controller from './controller';
+//import "./Router.js";
+import Router from './Router';
 
-new Controller();
+new Router();

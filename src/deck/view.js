@@ -33,17 +33,22 @@ class DeckView extends EventEmitter {
     createDeck(deckParams) {
         const h1 = createElement('h1', {}, deckParams.title);
         const renameInput = createElement('input', {type: 'text', className: 'renameInput'});
-        const delButton = createElement('button', {className: 'delButton'}, 'Удалить доску');
+        const delButton = createElement('button', {className: 'delButton'}, 'Удалить колонку');
         const header = createElement('header', {}, h1, renameInput, delButton);
         const ul = createElement('div', {className: 'todo-list'});
         const input = createElement('input', {type: 'text', className: 'input'});
         const submit = createElement('input', {type: 'submit', className: 'button', value: 'Добавить'});
         const form = createElement('form', {}, input, submit );
+<<<<<<< HEAD
         const btnShowFormAdd = createElement('button', {className: 'show-form-add'}, 'Добавить еще одну карточку');
         const main = createElement('main', { 'data-id': deckParams.id }, header, ul, form, btnShowFormAdd);
         const body = document.getElementsByTagName('body')[0];
+=======
+        const main = createElement('main', { 'data-id': deckParams.id }, header, ul, form);
+        const page = document.getElementById('page');
+>>>>>>> users
 
-        body.appendChild(main);
+        page.appendChild(main);
 
         //сортировка ToDo в колонке
         $( ".todo-list", main ).sortable({
@@ -221,17 +226,6 @@ class DeckView extends EventEmitter {
     
 
     updateList(e,ui) {
-        // console.log(ui.item);
-        // var list = [];
-        // ui.item.parent().children().each((item,html) => {
-        //         let id = html.getAttribute('data-id');
-        //         let title = html.textContent;
-            
-        //         list.push({id,title});
-        // });
-        // console.log(list);
-        // this.emit('changeList', list);
-
         var list2 = [];
         console.log(Array.from(this.list.children));
         Array.from(this.list.children).forEach(item => {
