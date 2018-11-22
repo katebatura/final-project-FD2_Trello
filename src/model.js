@@ -6,6 +6,7 @@ class Model extends EventEmitter {
         super();
         this.user = user;
         this.decks = load(this.user) || [];
+        console.log(this.decks)
     }
 
     addDeck() {

@@ -61,7 +61,6 @@ class Ajax {
     getValue(key) {
         this.key = key;
         console.log(this.info);
-        var self = this;
 
         function get() {
             return new Promise((resolve,reject) => {
