@@ -8,7 +8,7 @@ class Ajax {
         this.updatePassword = null;   
         this.key = null;
         this.value = null;
-        //this.getKeys.bind(this);
+        this.getKeys();
        
     }
     getKeys() {
@@ -61,7 +61,6 @@ class Ajax {
     getValue(key) {
         this.key = key;
         console.log(this.info);
-        var self = this;
 
         function get() {
             return new Promise((resolve,reject) => {
