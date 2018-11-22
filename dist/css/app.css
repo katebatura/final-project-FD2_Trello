@@ -1,4 +1,4 @@
-body {
+.decks {
     background-color: #fafafa;
     color: #757575;
     font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
@@ -77,6 +77,11 @@ main {
     border-radius: 2px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     background-color: #dfe3e6;
+}
+
+#header{
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 header {
@@ -196,7 +201,7 @@ header h1 {
 
 /* Todo form */
 
-form {
+main form {
     padding: 0 5px 0 5px;
     display: none;
 }
@@ -205,7 +210,7 @@ form {
     display: block;
 }
 
-form .input {
+main form .input {
     font-size: 14px;
     color: #757575;
     border-radius: 5px;

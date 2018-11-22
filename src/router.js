@@ -1,6 +1,5 @@
 import Controller from './controller';
 import ControllerStart from './controllerStart';
-import { save, load } from './helpers';
 
 class Router {
     constructor() {
@@ -12,10 +11,13 @@ class Router {
       // Подписаться на событие hashchange
       window.addEventListener('hashchange', this.onhashchange.bind(this));
 
-      if (document.location.hash === 'start' || document.location.hash === '' || !this.user) { 
+      if ( document.location.hash === '' && !this.user || document.location.hash === 'start') { 
         this.navigateTo('start');
-        } else {
-            this.navigateTo(document.location.hash);
+        } else { if (document.location.hash === '' && this.user || document.location.hash === 'decks') {
+                this.navigateTo('decks');
+            } else {
+                this.navigateTo(document.location.hash);
+            }            
         }
     }
 
@@ -28,7 +30,6 @@ class Router {
     _route(route) {
         route = route.substr(1);
         if (route === 'start') {  
-            this.user = null;      
             this.rootElement.innerHTML = '';
             this.ControllerStart = new ControllerStart();
             this.ControllerStart.on('changeUser', this.changeUser.bind(this))

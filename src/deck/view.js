@@ -39,14 +39,9 @@ class DeckView extends EventEmitter {
         const input = createElement('input', {type: 'text', className: 'input'});
         const submit = createElement('input', {type: 'submit', className: 'button', value: 'Добавить'});
         const form = createElement('form', {}, input, submit );
-<<<<<<< HEAD
         const btnShowFormAdd = createElement('button', {className: 'show-form-add'}, 'Добавить еще одну карточку');
         const main = createElement('main', { 'data-id': deckParams.id }, header, ul, form, btnShowFormAdd);
-        const body = document.getElementsByTagName('body')[0];
-=======
-        const main = createElement('main', { 'data-id': deckParams.id }, header, ul, form);
-        const page = document.getElementById('page');
->>>>>>> users
+        const page = document.getElementById('decks');
 
         page.appendChild(main);
 

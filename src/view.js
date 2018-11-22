@@ -9,9 +9,11 @@ class View extends EventEmitter {
     }
 
     createAddButton() {
-        const addButton = createElement('button', {className: 'add'}, 'Создать колонку');        
-        const saveButton = createElement('button', {className: 'add'}, 'Сохранить изменения');           
-        const logOutButton = createElement('button', {className: 'add'}, 'Выйти');
+        const decks = createElement('div', {id: 'decks',className: 'decks'});
+        const header = createElement('header', {id: 'header'});
+        const addButton = createElement('button', {className: 'add-deck-btn'}, 'Создать колонку');        
+        const saveButton = createElement('button', {className: 's'}, 'Сохранить изменения');           
+        const logOutButton = createElement('button', {className: 's'}, 'Выйти');
 
         const page = document.getElementById('page');
 
@@ -19,9 +21,11 @@ class View extends EventEmitter {
         saveButton.addEventListener('click', () => {this.emit('saveDecks')} );
         logOutButton.addEventListener('click', () => {this.emit('logOut')} );
 
-        page.appendChild(addButton);
-        page.appendChild(saveButton);        
-        page.appendChild(logOutButton);
+        header.appendChild(saveButton);        
+        header.appendChild(logOutButton);
+        decks.appendChild(addButton);
+        page.appendChild(header);
+        page.appendChild(decks);
     }
 }
 
