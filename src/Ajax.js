@@ -8,7 +8,7 @@ class Ajax {
         this.updatePassword = null;   
         this.key = null;
         this.value = null;
-        //this.getKeys.bind(this);
+        this.getKeys();
        
     }
     getKeys() {
