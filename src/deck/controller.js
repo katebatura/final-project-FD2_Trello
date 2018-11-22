@@ -9,7 +9,7 @@ class DeckController {
         this.user = user;
         this.model = new Model(deckParams || undefined);
         this.model.on('change', state => {
-            saveDeck(state,this.user);
+           saveDeck(state,this.user);
         });
         this.view = new View(deckParams);
         this.view.on('add', this.addTodo.bind(this));

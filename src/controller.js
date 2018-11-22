@@ -1,13 +1,16 @@
 import DeckController from "./deck/controller";
 import Model from "./model";
 import View from "./view";
+import Router from "./Router";
 
 class Controller {
     constructor(user) {
         this.user = user;
         this.model = new Model(user);
         this.view = new View();
-        this.view.on('addDeck', this.addDeck.bind(this));
+        this.view.on('addDeck', this.addDeck.bind(this));        
+        this.view.on('saveDecks', this.saveDecks.bind(this));             
+        this.view.on('logOut', this.logOut.bind(this));
         this.model.on('change', state => {
             new DeckController(state,this.user);
         });
@@ -17,6 +20,15 @@ class Controller {
 
     addDeck() {
         this.model.addDeck();
+    }
+
+    saveDecks() {
+        this.model.saveDecks();
+    }
+
+    logOut() {
+        localStorage.setItem('user', null);
+        new Router().navigateTo('start');
     }
 
 }

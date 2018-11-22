@@ -23,7 +23,9 @@ class Model extends EventEmitter {
         save(this.decks,this.user);
     }
 
-
+    saveDecks() {
+        save(load(this.user),this.user);
+    }
 
 }
 

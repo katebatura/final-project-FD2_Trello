@@ -1,6 +1,6 @@
 import Controller from './controller';
 import ControllerStart from './controllerStart';
-
+import { save, load } from './helpers';
 
 class Router {
     constructor() {
@@ -19,7 +19,7 @@ class Router {
         }
     }
 
-    onhashchange(e) {
+    onhashchange(e) {      
       const activeHash = document.location.hash;
       // Отрисовать страницу для нового адреса
       this._route(activeHash);

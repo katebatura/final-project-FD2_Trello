@@ -61,7 +61,7 @@ class DeckModel extends EventEmitter {
             items: this.items,
         });
         
-        return items;
+       
     }
 
     renameDeck(deckParams) {

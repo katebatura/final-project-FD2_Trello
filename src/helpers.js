@@ -38,6 +38,10 @@ class EventEmitter {//аналог PubSub
         }
     }
 }
+
+
+var ajax = new Ajax();
+
 function saveDeck(state,user) {
     const currentState = load(user);
     const newState = currentState.map(item => {
@@ -70,7 +74,6 @@ function save(data,user) {
     const string = JSON.stringify(data);
     localStorage.setItem(user, string);
     localStorage.setItem('user', user);
-    const ajax = new Ajax();
     ajax.addValue(user, string);
 }
 
@@ -79,15 +82,25 @@ function load(user) {
     var data = JSON.parse(string);
 
     if(!data) {
-        const ajax = new Ajax();
-        const stringAjax = ajax.getValue(user);
-        data = JSON.parse(stringAjax);
+        function get() {
+            return new Promise((resolve,reject)=>{                
+                ajax.getValue(user);
+                 resolve(); 
+            })
+        }
+       
+        get().then(()=> {
+            setTimeout(()=>{
+               var string = localStorage.getItem(user);
+            data = JSON.parse(string); 
+            },3000)
+            
+        })
+        
     }
 
     return data;
 }
-
-
 
 
 
