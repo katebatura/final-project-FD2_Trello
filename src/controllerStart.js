@@ -22,7 +22,6 @@ class ControllerStart extends EventEmitter{
         const user = this.model.enter(login, password);
         this.emit('changeUser', user);
     }
-
 }
 
 export default ControllerStart;
