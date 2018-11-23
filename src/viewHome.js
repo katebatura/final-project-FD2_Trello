@@ -39,18 +39,19 @@ class ViewHome extends EventEmitter {
         
         const h1 = createElement('h1', {}, deckParams.title);
         const renameInput = createElement('input', {type: 'text', className: 'renameInput'});
+        const enterButton = createElement('button', {className: 'enterButton'}, 'Войти');
         const delButton = createElement('button', {className: 'delButton'}, 'Удалить доску');
-        const main = createElement('main', {'data-id': deckParams.id}, h1, renameInput, delButton);
+        const main = createElement('main', {'data-id': deckParams.id}, h1, renameInput, enterButton, delButton);
         const page = document.getElementById('decks');
 
         page.appendChild(main);
 
         renameInput.addEventListener('keypress', this.renameDeck.bind(this));
         delButton.addEventListener('click', this.deleteDeckHome.bind(this) );
-        main.addEventListener('click', this.enterMain.bind(this) );
+        enterButton.addEventListener('click', this.enterMain.bind(this) );
 
         //переименование доски
-        $( 'h1', main ).dblclick(function(e) {
+        $( 'h1', main ).click(function(e) {
             const text = $(this).text();
             $(this).hide().next('input').val(text).show().focus();
         });
