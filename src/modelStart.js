@@ -33,17 +33,25 @@ class ModelStart {
 
     start(login, password) {   
         this.key = login;
-        this.info[login] = password; 
+        var info = this.info;
+
+        if(this.key in info) {
+            alert("Пользователь с таким логином уже зарегестрирован!")
+        } else {
+            this.info[login] = password; 
+        }
+        console.log(info);
+
 
         this.updatePassword = Math.random();
-            
-        $.ajax(
-            {
-                url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
-                data : { f : 'LOCKGET', n : this.stringName, p: this.updatePassword },
-                success :  this.AddValueReady.bind(this), error : this.errorHandler.bind(this)
-            }            
-        );
+
+           $.ajax(
+                {
+                    url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+                    data : { f : 'LOCKGET', n : this.stringName, p: this.updatePassword },
+                    success :  this.AddValueReady.bind(this), error : this.errorHandler.bind(this)
+                }            
+            );
 
         return this.key        
     }
