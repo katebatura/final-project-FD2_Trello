@@ -81,10 +81,8 @@ class ModelStart {
         var info = JSON.parse(callresult.result); 
         if ( info[this.key] && info[this.key] == this.password ) {
             location.hash = encodeURIComponent(newState);
-           
         } else {
-            console.log("Информации о " +  this.key + " нет")
-        }
+            alert("Пользователь с именем " + this.key + " не зарегестрирован");        }
     }
 
     errorHandler(jqXHR,statusStr,errorStr) {
