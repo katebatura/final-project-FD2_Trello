@@ -74,6 +74,10 @@ function save(data,user) {
     const string = JSON.stringify(data);
     localStorage.setItem(user, string);
     localStorage.setItem('user', user);
+}
+
+function saveAjax(data,user) {
+    const string = JSON.stringify(data);
     ajax.addValue(user, string);
 }
 
@@ -92,8 +96,8 @@ function load(user) {
         get().then(()=> {
             setTimeout(()=>{
                var string = localStorage.getItem(user);
-            data = JSON.parse(string); 
-            },3000)
+               data = JSON.parse(string); 
+            },5000)
             
         })
         
@@ -104,4 +108,5 @@ function load(user) {
 
 
 
-export { createElement, EventEmitter, save, load, saveDeck, deleteDeck, changeDeckList };
+
+export { createElement, EventEmitter, save, saveAjax, load, saveDeck, deleteDeck, changeDeckList };
