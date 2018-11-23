@@ -432,6 +432,6 @@ main form .input {
     height: 50px;
     border: 1px solid black;
     border-radius: 50%;
-    background: url(../img/1530546770_rmk_vdjbx10.jpg) no-repeat;  
+    background-image: url(../img/1530546770_rmk_vdjbx10.jpg);  
     background-size: 50px;  
 }

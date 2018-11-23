@@ -21,8 +21,9 @@ class ViewHome extends EventEmitter {
         
         
         const photo = createElement('input', {type: 'file', className: 'photo'});
+        const cancel = createElement('input', {type: 'button', value:'cancel', className: 'cancel'});
         const submit = createElement('input', {type: 'submit', value:'send'});
-        const form = createElement('form', {method: 'post', enctype: 'multipart/form-data'}, photo,submit);
+        const form = createElement('form', {method: 'post', enctype: 'multipart/form-data'}, photo,cancel,submit);
 
         const page = document.getElementById('page');
 
@@ -44,14 +45,18 @@ class ViewHome extends EventEmitter {
         page.appendChild(decks);
 
         $( '.avatar' ).dblclick(function(e) {
-            const text = $(this).text();
-            $(this).hide().next('form').val(text).show().focus();
+            $(this).next('form').show();
         });
-        $('form')
-            .hide()
-            .blur(function(e) {
-                $(this).hide().prev('.avatar').show();
+
+        $( 'form' ).hide();
+        form.addEventListener('submit', this.sendAvatar.bind(this))
+            
+        $( '.cancel' )   
+            .click(function(e) {
+                $(this).parent().hide();
             });
+        
+            
     }
     
     addDeckHome(deckParams) {
@@ -103,6 +108,9 @@ class ViewHome extends EventEmitter {
         const id = e.currentTarget.getAttribute('data-id'); 
         console.log(id);
         this.emit('enterDeck', id);
+    }
+
+    sendAvatar() {
     }
 }
 
