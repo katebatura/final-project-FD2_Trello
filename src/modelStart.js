@@ -50,7 +50,6 @@ class ModelStart {
     
     AddValueReady() {
         var info = this.info;
-        let newState = 'decks';
 
         $.ajax( {
             url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
@@ -76,7 +75,7 @@ class ModelStart {
     }
     
     getValueReady(callresult) {
-        let newState = 'decks';
+        let newState = 'home';
         localStorage.setItem('save', JSON.stringify(load(this.key) || []));
         var info = JSON.parse(callresult.result); 
         if ( info[this.key] && info[this.key] == this.password ) {
