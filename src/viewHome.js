@@ -6,7 +6,9 @@ class ViewHome extends EventEmitter {
         super();
         
         this.user = user;
-        this.page = this.createPage();       
+        this.page = this.createPage();     
+        this.avatar = document.getElementsByClassName('.avatar')[0];
+        
         
     }
 
@@ -20,9 +22,9 @@ class ViewHome extends EventEmitter {
         const logOutButton = createElement('button', {className: 's'}, 'Выйти');
         
         
-        const photo = createElement('input', {type: 'file', className: 'photo'});
+        const photo = createElement('input', {type: 'file', className: 'photo', accept:"image"});
         const cancel = createElement('input', {type: 'button', value:'cancel', className: 'cancel'});
-        const submit = createElement('input', {type: 'submit', value:'send'});
+        const submit = createElement('input', {type: 'button', value:'send'});
         const form = createElement('form', {method: 'post', enctype: 'multipart/form-data'}, photo,cancel,submit);
 
         const page = document.getElementById('page');
@@ -31,6 +33,7 @@ class ViewHome extends EventEmitter {
 
         addButton.addEventListener('click', () => {this.emit('addDeck')} );
         logOutButton.addEventListener('click', () => {this.emit('logOut')} );
+        submit.addEventListener('click', this.addAvatar.bind(this) );
             
         
         cabinet.appendChild(avatar); 
@@ -49,7 +52,6 @@ class ViewHome extends EventEmitter {
         });
 
         $( 'form' ).hide();
-        form.addEventListener('submit', this.sendAvatar.bind(this))
             
         $( '.cancel' )   
             .click(function(e) {
@@ -110,7 +112,12 @@ class ViewHome extends EventEmitter {
         this.emit('enterDeck', id);
     }
 
-    sendAvatar() {
+    addAvatar() {
+        var inputFile = document.getElementsByClassName('photo')[0].files;
+        if(!inputFile) return;
+        alert(inputFile);
+        var fileName = inputFile[0].name;
+        this.avatar.css.backgroundImage = fileName;
     }
 }
 
