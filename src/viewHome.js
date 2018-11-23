@@ -46,7 +46,7 @@ class ViewHome extends EventEmitter {
         const renameInput = createElement('input', {type: 'text', className: 'renameInput'});
         const enterButton = createElement('button', {className: 'enterButton'}, 'Войти');
         const delButton = createElement('button', {className: 'delButton'}, 'Удалить доску');
-        const headWrap = createElement('div', {className: 'head-wrap'}, h1, delButton);
+        const headWrap = createElement('div', {'data-id': deckParams.id, className: 'head-wrap'}, h1, delButton);
 
         const main = createElement('main', {'data-id': deckParams.id, className: 'home-deck'}, headWrap, renameInput, enterButton);
         const page = document.getElementById('decks');
