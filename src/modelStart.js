@@ -81,7 +81,7 @@ class ModelStart {
             location.hash = encodeURIComponent(newState);
            
         } else {
-            alert("Пользователь с именем " + this.login + " не зарегестрирован");
+            alert("Пользователь с именем " + this.key + " не зарегестрирован");
         }
     }
 
