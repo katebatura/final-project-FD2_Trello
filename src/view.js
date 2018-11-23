@@ -13,6 +13,7 @@ class View extends EventEmitter {
         const decks = createElement('div', {id: 'decks',className: 'decks'});
         const header = createElement('header', {id: 'header'});
         const cabinet = createElement('div', {});
+        const avatar = createElement('div', {className: 'avatar'});
         const user = createElement('div', {className: 'user'});
         const addButton = createElement('button', {className: 'add-deck-btn'}, 'Создать колонку');        
         const saveButton = createElement('button', {className: 's'}, 'Сохранить изменения');         
@@ -28,6 +29,7 @@ class View extends EventEmitter {
         home.addEventListener('click', () => {this.emit('home')} );
         logOutButton.addEventListener('click', () => {this.emit('logOut')} );
 
+        cabinet.appendChild(avatar); 
         cabinet.appendChild(user);       
         cabinet.appendChild(logOutButton);
 

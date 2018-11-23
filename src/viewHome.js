@@ -14,9 +14,15 @@ class ViewHome extends EventEmitter {
         const decks = createElement('div', {id: 'decks',className: 'decks'});
         const header = createElement('header', {id: 'header'});
         const cabinet = createElement('div', {});
+        const avatar = createElement('div', {className: 'avatar'});
         const user = createElement('div', {className: 'user'});
         const addButton = createElement('button', {className: 'add-deck-btn'}, 'Создать доску');     
         const logOutButton = createElement('button', {className: 's'}, 'Выйти');
+        
+        
+        const photo = createElement('input', {type: 'file', className: 'photo'});
+        const submit = createElement('input', {type: 'submit', value:'send'});
+        const form = createElement('form', {method: 'post', enctype: 'multipart/form-data'}, photo,submit);
 
         const page = document.getElementById('page');
 
@@ -24,7 +30,10 @@ class ViewHome extends EventEmitter {
 
         addButton.addEventListener('click', () => {this.emit('addDeck')} );
         logOutButton.addEventListener('click', () => {this.emit('logOut')} );
-
+            
+        
+        cabinet.appendChild(avatar); 
+        cabinet.appendChild(form);
         cabinet.appendChild(user);       
         cabinet.appendChild(logOutButton);
  
@@ -33,6 +42,16 @@ class ViewHome extends EventEmitter {
         decks.appendChild(addButton);
         page.appendChild(header);
         page.appendChild(decks);
+
+        $( '.avatar' ).dblclick(function(e) {
+            const text = $(this).text();
+            $(this).hide().next('form').val(text).show().focus();
+        });
+        $('form')
+            .hide()
+            .blur(function(e) {
+                $(this).hide().prev('.avatar').show();
+            });
     }
     
     addDeckHome(deckParams) {
