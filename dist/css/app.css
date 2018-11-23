@@ -408,3 +408,10 @@ main form .input {
     top: 0;
     left: 0;
 }
+
+.user{
+    display: inline-block;
+    color: black;
+    text-transform: none;
+    margin: 0 20px;
+}

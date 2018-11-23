@@ -1,11 +1,12 @@
 import { EventEmitter } from './helpers';
-import { save, load, saveAjax } from './helpers';
+import { save, load, saveAjax, saveUser } from './helpers';
 
 class Model extends EventEmitter {
-    constructor(user) {
+    constructor(name,user) {
         super();
         this.user = user;
-        this.decks = load(user) || [];
+        this.name = name;
+        this.decks = load(this.name) || [];
         this.ajaxDecks = JSON.parse(localStorage.getItem('save')) || [];
         
         console.log(this.ajaxDecks);
@@ -25,26 +26,27 @@ class Model extends EventEmitter {
         };
         this.decks.push(newDeck);
         this.emit('change', newDeck);
-        save(this.decks,this.user);
+        save(this.decks,this.name);
+        saveUser(this.user);
     }
 
     saveDecks() {
         //save(this.decks, this.user);
-        this.decks = load(this.user) || [];
-        localStorage.setItem('save', JSON.stringify(load(this.user) || []));
+        this.decks = load(this.name) || [];
+        localStorage.setItem('save', JSON.stringify(load(this.name) || []));
         this.ajaxDecks = JSON.parse(localStorage.getItem('save'));
-        saveAjax(this.ajaxDecks, this.user);
+        saveAjax(this.ajaxDecks, this.name);
         console.log(this.ajaxDecks);
         console.log(this.decks);
         console.log(JSON.stringify(this.ajaxDecks) == JSON.stringify(this.decks))
     }
 
     canselChanges() {
-        save(this.ajaxDecks,this.user);
+        save(this.ajaxDecks,this.name);
     }
     
     compareInfo() {  
-            this.decks = load(this.user) || [];
+            this.decks = load(this.name) || [];
 
             if( JSON.stringify(this.ajaxDecks) == JSON.stringify(this.decks)) {
              return true

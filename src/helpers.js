@@ -73,12 +73,21 @@ function changeDeckList(newState,user) {
 function save(data,user) {
     const string = JSON.stringify(data);
     localStorage.setItem(user, string);
+}
+
+function saveUser(user) {
     localStorage.setItem('user', user);
 }
 
 function saveAjax(data,user) {
     const string = JSON.stringify(data);
     ajax.addValue(user, string);
+}
+
+function saveHome(data,user){
+    const string = JSON.stringify(data);
+    localStorage.setItem(user, string);
+
 }
 
 function load(user) {
@@ -109,4 +118,4 @@ function load(user) {
 
 
 
-export { createElement, EventEmitter, save, saveAjax, load, saveDeck, deleteDeck, changeDeckList };
+export { createElement, EventEmitter, save, saveUser, saveAjax, load, saveDeck, saveHome, deleteDeck, changeDeckList };
