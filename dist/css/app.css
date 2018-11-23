@@ -488,3 +488,18 @@ main form .input {
     left: 0;
 }
 
+@media (max-width: 535px) {
+    #header {
+        flex-direction: column;
+        padding: 10px;
+        height: 150px;
+    }
+
+    .decks {
+        margin: 150px 0 0 0;
+    }
+
+    .main-cabinet-wrap {
+        order: 0;
+    }
+}
