@@ -25,6 +25,7 @@ class ModelHome extends EventEmitter {
     }
 
     saveDeck(deckParams) {
+        localStorage.setItem('save', JSON.stringify(load(this.user + deckParams.id) || []));
         saveDeck(deckParams, 'home_' + this.user);
         this.Homedecks = load('home_' + this.user) || [];
         saveAjax(this.Homedecks,'home_' + this.user);

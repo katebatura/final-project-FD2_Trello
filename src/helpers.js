@@ -103,9 +103,10 @@ function load(user) {
         }
        
         get().then(()=> {
-            
+            setTimeout(()=>{
                var string = localStorage.getItem(user);
                data = JSON.parse(string); 
+            },5000)
             
         })
         

@@ -31,9 +31,8 @@ class Model extends EventEmitter {
     }
 
     saveDecks() {
-        //save(this.decks, this.user);
         this.decks = load(this.name) || [];
-        localStorage.setItem('save', JSON.stringify(load(this.name) || []));
+        localStorage.setItem('save', JSON.stringify(this.decks || []));
         this.ajaxDecks = JSON.parse(localStorage.getItem('save'));
         saveAjax(this.ajaxDecks, this.name);
         console.log(this.ajaxDecks);

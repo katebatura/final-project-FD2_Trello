@@ -1,4 +1,4 @@
-import {  deleteDeck } from './helpers';
+import {  deleteDeck, load } from './helpers';
 import ModelHome from "./modelHome";
 import ViewHome from "./viewHome";
 import Router from "./Router";
@@ -36,6 +36,7 @@ class ControllerHome {
     }
 
     enterDeck(id) {
+        localStorage.setItem('save', JSON.stringify(load(this.user + id) || []));
         new Router(id).navigateTo('decks');
     }
 
