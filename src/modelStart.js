@@ -1,3 +1,4 @@
+import {  load } from './helpers';
 
 var ajaxHandlerScript="http://fe.it-academy.by/AjaxStringStorage2.php";
 
@@ -61,7 +62,7 @@ class ModelStart {
 
     enter(login, password) {
         this.key = login;
-        this.password = password;
+        this.password = password;        
 
         $.ajax(
             {
@@ -76,6 +77,7 @@ class ModelStart {
     
     getValueReady(callresult) {
         let newState = 'decks';
+        localStorage.setItem('save', JSON.stringify(load(this.key) || []));
         var info = JSON.parse(callresult.result); 
         if ( info[this.key] && info[this.key] == this.password ) {
             location.hash = encodeURIComponent(newState);

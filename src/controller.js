@@ -33,7 +33,13 @@ class Controller {
     }
 
     logOut() {
-        localStorage.setItem('user', null);
+        var compare = this.model.compareInfo();
+        if(!compare) {
+            if(!confirm('Есть несохраненные изменения. Вы уверены, что хотите выйти?')) {
+                return
+            }
+        };
+        this.model.canselChanges();
         new Router().navigateTo('start');
     }
 
