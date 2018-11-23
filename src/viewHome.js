@@ -88,7 +88,7 @@ class ViewHome extends EventEmitter {
         }
     }
     enterMain(e) {
-        const id = e.currentTarget.getAttribute('data-id'); 
+        const id = e.currentTarget.parentNode.getAttribute('data-id'); 
         console.log(id);
         this.emit('enterDeck', id);
     }

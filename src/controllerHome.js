@@ -10,7 +10,7 @@ class ControllerHome {
         let promise = new Promise((resolve,reject) => {            
              this.model = new ModelHome(this.user);
              resolve();
-        })
+        });
         promise.then(()=>{
             this.view = new ViewHome(this.user);
             this.view.on('addDeck', this.addDeck.bind(this));                
