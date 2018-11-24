@@ -21,7 +21,7 @@ class Model extends EventEmitter {
         console.log(DeckNumber);
         const newDeck = {
             id: `app${DeckNumber + 1}`,
-            title: `deck ${DeckNumber + 1}`,
+            title: `Column ${DeckNumber + 1}`,
             lines:[],
         };
         this.decks.push(newDeck);
