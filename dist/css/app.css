@@ -3,7 +3,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
 #header{
     padding: 20px;
     box-sizing: border-box;
@@ -14,28 +13,23 @@ body {
     width: 100%;
     height: 100px;
 }
-
 .home-deck {
     display: flex;
     justify-content: space-between;
     padding: 10px;
     flex-direction: column;
 }
-
 .head-wrap {
     display: flex;
     justify-content: space-between;
 }
-
 .home-header {
     justify-content: flex-end;
 }
-
 .main-cabinet-wrap {
     display: flex;
     flex-direction: column;
 }
-
 .user{
     display: inline-block;
     color: black;
@@ -43,7 +37,6 @@ body {
     text-align: left;
     margin-bottom: 5px;
 }
-
 /* кнопка выйти */
 .s {
     width: 60px;
@@ -55,7 +48,6 @@ body {
     padding: 0;
     color: #9b9a9a;
 }
-
 .ss,
 .enterButton {
     background: #519839;
@@ -74,18 +66,17 @@ body {
     text-align: center;
     box-shadow: 0 1px 0 #3f6f21;
     font-size: 12px;
+    transition: all 1s linear;
 }
-
 .enterButton:hover,
 .ss:hover {
-    background-color: #3f6f21;
+    background-color: #14240b;
+    opacity: 1;
 }
-
 .enterButton:active,
 .ss:active {
     background-color: #519839;
 }
-
 .decks {
     background-color: #fafafa;
     color: #757575;
@@ -95,7 +86,6 @@ body {
     padding: 15px;
     display: inline-flex;
 }
-
 header {
     display: flex;
     align-items: center;
@@ -106,7 +96,6 @@ header {
     display: flex;
     justify-content: space-between;
 }
-
 main {
     display: inline-block;
     min-width: 300px;
@@ -116,7 +105,6 @@ main {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     background-color: #dfe3e6;
 }
-
 /* Форма регистрации - start */
 .reg-form {
     display: flex;
@@ -133,7 +121,6 @@ main {
     margin: -100px 0 0 -150px;
     padding: 15px;
 }
-
 .login,
 .password {
     height: 30px;
@@ -143,7 +130,6 @@ main {
     padding-left: 10px;
     outline: none;
 }
-
 .err {
     display: block;
     height: 20px;
@@ -152,7 +138,6 @@ main {
     color: red;
     padding-left: 5px;
 }
-
 .start,
 .reg {
     background: #519839;
@@ -174,25 +159,26 @@ main {
     text-align: center;
     line-height: 36px;
     box-shadow: 0 1px 0 #3f6f21;
+    transition: all 1s linear;
 }
-
+.start:hover,
+.reg:hover {
+    background-color: #14240b;
+    opacity: 1;
+}
 .reg {
     margin-top: 10px;
 }
-
 .head {
     margin: 0 auto 15px;
     font-size: 35px;
 }
-
 /* Форма регистрации - end */
-
 .todo-list {
     list-style: none;
     margin: 0;
     padding: 5px;
 }
-
 .button {
     background: #519839;
     border: none;
@@ -212,15 +198,12 @@ main {
     line-height: 36px;
     box-shadow: 0 1px 0 #3f6f21;
 }
-
 .button:hover {
     background-color: #3f6f21;
 }
-
 .button:active {
     background-color: #519839;
 }
-
 .button.icon {
     border-radius: 50%;
     font-size: 24px;
@@ -233,7 +216,6 @@ main {
     overflow: hidden;
     line-height: normal;
 }
-
 .button .material-icons {
     position: absolute;
     top: 50%;
@@ -243,13 +225,11 @@ main {
     width: 24px;
     vertical-align: middle;
 }
-
 h1 {
     display: inline-block;
     color: #323330;
     font-size: 16px;
 }
-
 /* Todo Item */
 .todo-item {
     display: flex;
@@ -267,54 +247,42 @@ h1 {
     cursor: pointer;
     white-space: normal;
 }
-
 .todo-item.completed * {
     color: lightgray;
 }
-
 .todo-item .checkbox {
     margin-right: .5rem;
 }
-
 .textfield {
     height: 20px;
 }
-
 .todo-item .title,
 .todo-item .textfield {
     margin-right: auto;
 }
-
 .todo-item .textfield {
     display: none;
 }
-
 .todo-item.completed .title {
     text-decoration: line-through;
 }
-
 .todo-item.editing .checkbox,
 .todo-item.editing .title {
     display: none;
 }
-
 .todo-item.editing .textfield {
     display: block;
     flex: 1;
     margin-right: 16px;
 }
-
 .todo-item .button {
     opacity: 0;
     transition: all .2s;
 }
-
 .todo-item:hover .button:not(.checkbox) {
     opacity: 1;
 }
-
 /* btn show add Todo */
-
 .show-form-add {
     background-color: #dfe3e6;
     outline: none;
@@ -329,7 +297,6 @@ h1 {
     font-size: 14px;
     height: 40px;
 }
-
 .show-form-add:before {
     content: "+";
     margin-right: 5px;
@@ -339,24 +306,19 @@ h1 {
     top: 13px;
     left: 8px;
 }
-
 .show-form-add:hover {
     background-color: #c3ccd1;
     color: #2c4b5d;
     text-decoration: underline;
 }
-
 /* Todo form */
-
 main form {
     padding: 0 5px 0 5px;
     display: none;
 }
-
 .show-form {
     display: block;
 }
-
 main form .input {
     font-size: 14px;
     color: #757575;
@@ -368,9 +330,7 @@ main form .input {
     height: 35px;
     padding-left: 10px;
     box-shadow: 0 1px 0 #bdbdbe;
-
 }
-
 .remove,
 .edit,
 .save {
@@ -383,16 +343,13 @@ main form .input {
     background-color: #fff;
     border-radius: 5px;
 }
-
 .edit {
     margin-right: 2px;
 }
-
 .remove:hover,
 .edit:hover {
     box-shadow: 0 0 0 1px #dfe3e6;
 }
-
 .remove:before,
 .edit:before,
 .save:before{
@@ -407,15 +364,12 @@ main form .input {
     top: 3px;
     left: 3px;
 }
-
 .edit:before {
     background-position: 0 0;
 }
-
 .save:before {
     background-position: 0 -40px;
 }
-
 /* Btn add deck*/
 .add-deck-btn {
     border: none;
@@ -433,7 +387,6 @@ main form .input {
     height: 1%;
     position: relative;
 }
-
 .add-deck-btn:before {
     content: "+";
     margin-right: 5px;
@@ -443,11 +396,9 @@ main form .input {
     top: 12px;
     left: 15px;
 }
-
 .add-deck-btn:hover {
     background-color: rgba(113, 113, 113, 0.7);
 }
-
 .delButton {
     border: none;
     outline: none;
@@ -456,13 +407,9 @@ main form .input {
     font-size: 14px;
     color: #c6c4c4;
 }
-
-
-
 .delButton:hover {
     color: #9b9a9a;
 }
-
 .show-form-add_open {
     position: relative;
     left: 120px;
@@ -473,11 +420,9 @@ main form .input {
     cursor: pointer;
     color: #9b9a9a;
 }
-
 .show-form-add_open:hover {
     color: #6b808c;
 }
-
 .show-form-add_open:before {
     content: "×";
     margin-right: 5px;
@@ -487,18 +432,15 @@ main form .input {
     top: 0;
     left: 0;
 }
-
 @media (max-width: 535px) {
     #header {
         flex-direction: column;
         padding: 10px;
         height: 150px;
     }
-
     .decks {
         margin: 150px 0 0 0;
     }
-
     .main-cabinet-wrap {
         order: 0;
     }
