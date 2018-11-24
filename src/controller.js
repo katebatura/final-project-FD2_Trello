@@ -42,6 +42,7 @@ class Controller {
             }
         };
         this.model.canselChanges();
+        localStorage.removeItem('user');
         new Router().navigateTo('start');
     }
 

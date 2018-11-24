@@ -32,6 +32,7 @@ class ControllerHome {
     }
 
     logOut() {
+        localStorage.removeItem('user');
         new Router().navigateTo('start');
     }
 

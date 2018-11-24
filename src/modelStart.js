@@ -62,7 +62,7 @@ class ModelStart {
         $.ajax( {
             url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
             data : { f : 'UPDATE', n : this.stringName, v : JSON.stringify(info), p : this.updatePassword },
-            success : (e) => console.log(e, this.info), error : this.errorHandler.bind(this)
+            success : (e) => alert('Вы успешно зарегистрированы!'), error : this.errorHandler.bind(this)
             }
         );
     }
@@ -84,7 +84,6 @@ class ModelStart {
     
     getValueReady(callresult) {
         let newState = 'home';
-        localStorage.setItem('save', JSON.stringify(load(this.key) || []));
         var info = JSON.parse(callresult.result); 
         if ( info[this.key] && info[this.key] == this.password ) {
             location.hash = encodeURIComponent(newState);
